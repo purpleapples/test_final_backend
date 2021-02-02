@@ -10,29 +10,32 @@ const HomeContainer = () => {
 
     const showBokeh = (plot, div_id) => {
         console.log("data", plot);        
-        window.Bokeh.embed.embed_item(plot, div_id);
-    }
+        window.Bokeh.embed.embed_item(plot['plot'], div_id);
+    } 
     
     const data = async () => {
         try{
             const weekContentCnt = await serverApi.getBokeh();
             const weekTopics = await serverApi.getBokeh();
             const weekTopicCnt = await serverApi.getBokeh();
-
+            setWeekTopics(weekContentCnt);
+            setWeekTopics(weekTopics);
+            setWeeksTopicsCnt(weekTopicCnt);
+            
+            showBokeh(weekContentCnt, "weeks_content_count");
+            showBokeh(weekContentCnt, "weeks_topics");
+            showBokeh(weekContentCnt, "weeks_topics_count");
+            
         }catch(error){
             setError({error:error});
             
         }finally{
             setLoading(false);    
-            setWeekTopics(weekContentCnt);
-            console.log(weekContentCnt);
-            showBokeh(weekContentCnt, "weeks_content_count");
-            setWeekTopics(weekTopics);
-            setWeeksTopicsCnt(weekTopicCnt);
+            
         }
         
     }
-    useEffect( ()=> {data() }, []);
+    useEffect( ()=> {data();}, []);
     return (<HomePresenter/>);
         
 
