@@ -20,13 +20,7 @@ const InputLabel = styled.label`
 const StyledP = styled.p`
     padding-bottom:5px;
 `;
-const StyledForm = styled.form`
-    padding-top:15px;
-    display:flex;
-    flex-direction:row;
-    align-items:flex-end;
-`;
-const HomePresenter = ({searchBokeh, 
+const LdaPresenter = ({searchBokeh, 
                         loading,
                         searchDate,
                         setDate
@@ -34,11 +28,11 @@ const HomePresenter = ({searchBokeh,
     return (
     <>
     {loading ? (<Loader />) : (<div>
-                            <StyledForm onSubmit={searchBokeh}>
+                            <form onSubmit={searchBokeh}>
                                 <InputLabel for='date'>일자 선택 </InputLabel>
                                 <input id='date' type='date' value ={searchDate} onChange={setDate}/>
                                 <input type='submit' value='click'/>
-                            </StyledForm>
+                            </form>
                             <StyledSection>
                                 <SubSection>
                                     <StyledP>주간 데이터 발생량 </StyledP>
@@ -66,4 +60,4 @@ const HomePresenter = ({searchBokeh,
     );
 }
 
-export default HomePresenter;
+export default LdaPresenter;

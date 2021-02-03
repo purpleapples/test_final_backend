@@ -1,8 +1,8 @@
 import {useEffect, useState, useRef} from 'react';
-import HomePresenter from './HomePresenter';
+import LdaPresenter from './LdaPresenter';
 import {serverApi} from '../../api';
 
-const HomeContainer = () => {
+const LdaContainer = () => {
     const [weekContentCnt, setWeeksContentCnt] = useState("");
     const [weekTopics, setWeekTopics]          = useState("");
     const [weekTopicCnt, setWeeksTopicsCnt]    = useState("");
@@ -12,7 +12,7 @@ const HomeContainer = () => {
 
     const showBokeh = (plot, div_id) => {
         console.log("data", plot);        
-        window.Bokeh.embed.embed_item(plot['plot'], div_id);
+        window.Bokeh.embed.embed_item(plot['plot'], div_id); 
     } 
     const setDate = (e) => {
         setSearchDate(e.target.value);
@@ -23,8 +23,7 @@ const HomeContainer = () => {
         return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
       }
     const searchBokeh = async (e) => {
-            e.preventDefault();                
-
+        e.preventDefault();                
         // 주차 계산
         if (searchDate == ""){
             searchDate =  new Date();
@@ -32,8 +31,8 @@ const HomeContainer = () => {
         const date = new Date(searchDate); 
              
         const year = (date.getFullYear()).toString(); 
-        const weekNum = (date.getWeek()).toString(); // 해당 년도의 주차 반환         
-        
+        const weekNum = (date.getWeek()).toString(); // 해당 년도의 주차 반환 
+        const searchDoc2 = '';
         try{
             const searchDoc = {"year": year,
                                "weekNum" : weekNum,
@@ -68,16 +67,14 @@ const HomeContainer = () => {
             setLoading(false);                
         }
     }
-    const data = () => {
+    const data = async () => {
         try{
-            const ex = '';
-            //searchBokeh(ex);
-            // const weekContentCnt = await serverApi.getBokeh();
-            // const weekTopics = await serverApi.getBokeh();
-            // const weekTopicCnt = await serverApi.getBokeh();
-            // setWeekTopics(weekContentCnt);
-            // setWeekTopics(weekTopics);
-            // setWeeksTopicsCnt(weekTopicCnt);
+            const weekContentCnt = await serverApi.getBokeh();
+            const weekTopics = await serverApi.getBokeh();
+            const weekTopicCnt = await serverApi.getBokeh();
+            setWeekTopics(weekContentCnt);
+            setWeekTopics(weekTopics);
+            setWeeksTopicsCnt(weekTopicCnt);
              
             // showBokeh(weekContentCnt, "weeklyDataOccurence");
             // showBokeh(weekTopics, "weeklyIssueChange");
@@ -94,7 +91,7 @@ const HomeContainer = () => {
     }
     useEffect( ()=> {data();}, []);
 
-    return (<HomePresenter searchBokeh={searchBokeh}
+    return (<LdaPresenter searchBokeh={searchBokeh}
                            loading = {loading}
                            searchDate = {searchDate}
                            setDate = {setDate}
@@ -102,4 +99,4 @@ const HomeContainer = () => {
             />);        
 }
 
-export default HomeContainer;
+export default LdaContainer;

@@ -21,7 +21,7 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-    width:80px;
+    width:150px;
     text-align: center;
     height:50px;
     border-bottom: 3px solid
@@ -42,8 +42,11 @@ export default withRouter(({location:{pathname}}) => {
             <Header >            
                 <List>
                     <Item current={pathname === "/"}>
-                        <StyledLink to={"/"}>HOME </StyledLink> 
-                    </Item>                    
+                        <StyledLink to={"/"}>데이터 발생 현황 </StyledLink> 
+                    </Item>       
+                    <Item current={pathname === "/lda"}>
+                        <StyledLink to={"/lda"}>데이터 분석 결과 </StyledLink> 
+                    </Item>              
                     <Item current={pathname === "/admin"}>
                         <StyledLink to={"/admin"}>Admin </StyledLink> 
                     </Item>                                      

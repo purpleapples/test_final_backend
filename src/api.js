@@ -12,7 +12,7 @@ export const serverApi = {
     getBokeh : (searchdoc) =>api.post('/visual', searchdoc,
     {headers:{ "Content-Type": `application/json`}}).then(
         response =>{
-            return response.data.data['0']
+            return response.data.data
         }
     )
     
