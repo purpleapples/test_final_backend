@@ -17,6 +17,7 @@ const Header = styled.header`
 
 const List = styled.ul`
     display:flex;
+    // float:right;
 `;
 
 const Item = styled.li`
