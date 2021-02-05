@@ -1,105 +1,55 @@
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
 import HomePresenter from './HomePresenter';
-import {serverApi} from '../../api';
+const HomeContainer = () => {    
+    const initialDoc = {
+        "year"  : new Date().getFullYear(),
+        "month" : new Date().getMonth(),
+        "week"  : new Date().getWeek(),
+        "graphSort" : ""
+    }
 
-const HomeContainer = () => {
-    const [weekContentCnt, setWeeksContentCnt] = useState("");
-    const [weekTopics, setWeekTopics]          = useState("");
-    const [weekTopicCnt, setWeeksTopicsCnt]    = useState("");
-    const [loading, setLoading]                = useState(true);
-    const [error, setError]                    = useState("");
-    const [searchDate, setSearchDate]          = useState("");
+    const [searchDate, setSearchDate] = useState(new Date());        
+    const [condition1, setCondition1] = useState({...initialDoc, "graphSort": "data_count_graph"});
+    const [condition2, setCondition2] = useState({...initialDoc, "graphSort": "data_change_graph"});
+    const [condition3, setCondition3] = useState({...initialDoc, "graphSort": "data_category_graph"});
+    const [condition4, setCondition4] = useState({...initialDoc, "graphSort": "classificationPiechart"});
 
-    const showBokeh = (plot, div_id) => {
-        console.log("data", plot);        
-        window.Bokeh.embed.embed_item(plot['plot'], div_id);
-    } 
+    // state 업데이트 함수
     const setDate = (e) => {
-        setSearchDate(e.target.value);
+        setSearchDate(e.target.value);        
     }
     // Data.protype에 주차 구하는 새로운 함수 생성
-    Date.prototype.getWeek = function() {
-        var onejan = new Date(this.getFullYear(),0,1);
-        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-      }
-    const searchBokeh = async (e) => {
-            e.preventDefault();                
 
-        // 주차 계산
-        if (searchDate == ""){
-            searchDate =  new Date();
-        }          
-        const date = new Date(searchDate); 
-             
-        const year = (date.getFullYear()).toString(); 
-        const weekNum = (date.getWeek()).toString(); // 해당 년도의 주차 반환         
-        
-        try{
-            const searchDoc = {"year": year,
-                               "weekNum" : weekNum,
-                               "graphSort": "data_count_graph"}
-                
-            const weeklyDataOccurence = await serverApi.getBokeh(searchDoc);
-            showBokeh(weeklyDataOccurence, "weeklyDataOccurence");
-            
-            // const searchDoc2 = {"year": year,
-            //                    "weekNum" : weekNum,
-            //                    "graphSort": "data_count_graph"}
-                
-            // const weeklyIssueChange = await serverApi.getBokeh(searchDoc2);
-            // showBokeh(weeklyIssueChange, "weeklyIssueChange");
-            // const searchDoc3 = {"year": year,
-            //                    "weekNum" : weekNum,
-            //                    "graphSort": "data_count_graph"}
-                
-            // const weeklyIssueOccurence = await serverApi.getBokeh(searchDoc3);
-            // showBokeh(weeklyIssueOccurence, "weeklyIssueOccurence");
-            // const searchDoc4 = {"year": year,
-            //                    "weekNum" : weekNum,
-            //                    "graphSort": "data_count_graph"}
-                
-            // const monthlyDataOccurence = await serverApi.getBokeh(searchDoc4);
-            // showBokeh(monthlyDataOccurence, "monthlyDataOccurence");
-
-        }catch(error){
-            setError({error:error});     
-            console.log(error);
-        }finally{
-            setLoading(false);                
+    const searchPlot = async (e) => {
+        e.preventDefault();               
+        const date = new Date(searchDate);
+        const new_doc = {
+        "year"  : date.getFullYear(),
+        "month" : date.getMonth(),
+        "week"  : date.getWeek(),
         }
-    }
-    const data = () => {
-        try{
-            const ex = '';
-            //searchBokeh(ex);
-            // const weekContentCnt = await serverApi.getBokeh();
-            // const weekTopics = await serverApi.getBokeh();
-            // const weekTopicCnt = await serverApi.getBokeh();
-            // setWeekTopics(weekContentCnt);
-            // setWeekTopics(weekTopics);
-            // setWeeksTopicsCnt(weekTopicCnt);
-             
-            // showBokeh(weekContentCnt, "weeklyDataOccurence");
-            // showBokeh(weekTopics, "weeklyIssueChange");
-            // showBokeh(weekTopicCnt, "weeklyIssueOccurence");
-            // showBokeh(weekTopicCnt, "monthlyDataOccurence");
-            
-        }catch(error){
-            setError({error:error});
-            
-        }finally{
-            setLoading(false);    
-        }
-        
-    }
-    useEffect( ()=> {data();}, []);
 
-    return (<HomePresenter searchBokeh={searchBokeh}
-                           loading = {loading}
-                           searchDate = {searchDate}
-                           setDate = {setDate}
+        setCondition1({...condition1, ...new_doc});
+        setCondition2({...condition2, ...new_doc});
+        setCondition3({...condition3, ...new_doc});
+        setCondition4({...condition4, ...new_doc});       
+    }
 
-            />);        
+    useEffect( ()=> {
+        const date = new Date();
+        setSearchDate(date);
+
+    }, []);
+    
+    return (<HomePresenter searchPlot  ={searchPlot}
+                           searchDate  = {searchDate}
+                           setDate     = {setDate}
+                           condition1  = {condition1}
+                           condition2  = {condition2}
+                           condition3  = {condition3}
+                           condition4  = {condition4}
+
+            />);
 }
 
 export default HomeContainer;

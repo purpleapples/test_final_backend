@@ -21,7 +21,7 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-    width:150px;
+    width:200px;
     text-align: center;
     height:50px;
     border-bottom: 3px solid
