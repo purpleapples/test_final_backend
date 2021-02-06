@@ -14,7 +14,7 @@ export const serverApi = {
            .catch(error => {console.log(error)})
     ).then(response => {
         console.log('plot');
-        console.log(response.data.data.plot);
+        console.log(response.data.data.plot);        
         return response;
     })
     

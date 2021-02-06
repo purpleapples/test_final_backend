@@ -6,7 +6,7 @@ const StyledSection = styled.section`
     grid-template-rows : 20em 20em;
     grid-row: auto auto;
     grid-column-gap: 50px;
-    grid-row-gap: 20px;
+    grid-row-gap: 50px;
 `;
 const SubSection = styled.section`
     padding-top: 10px;
@@ -28,23 +28,31 @@ const StyledForm = styled.form`
     align-items:flex-end;
 `;
 const HomePresenter = ({searchPlot, 
-                        searchDate,
-                        setDate,
+                        dateRef,
+                        period,
+                        _handler_on_period,
+                        searchDate,                        
+                        _handler_on_date,
                         condition1,
                         condition2,
                         condition3,
                         condition4,
-                        articleRef1,
-                        articleRef2,
-                        articleRef3,
-                        articleRef4
+                        
                     }) => {
                         //delete_test
     return (
         <div>
             <StyledForm onSubmit={searchPlot}>
+                
+                <InputLabel htmlFor ='date'>기간 선택 </InputLabel>
+                <select id = 'opts' size='1' name='opts' value={period} onChange={_handler_on_period}>
+                    <option value='week' seleted="selected">  week</option>
+                    <option value='month'>month</option>
+                    <option value='year'>year</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <InputLabel htmlFor ='date'>일자 선택 </InputLabel>
-                <input id='date' type='date' value ={searchDate} onChange={setDate}/>
+                <input id='date' name='date' type='date' value ={searchDate} onChange={_handler_on_date} ref={dateRef}/>                                
                 <input type='submit' value='click'/>
             </StyledForm>
             <StyledSection>
