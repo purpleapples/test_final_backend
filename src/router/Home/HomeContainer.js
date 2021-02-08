@@ -19,12 +19,13 @@ const HomeContainer = () => {
 
     // 검색 기간 업데이트 함수
     const _handler_on_period = (e) =>{        
-
+        // 선택된 기간에 따라 date input 조절
         setPeriod(e.target.value);        
         const value = e.target.value;
         if (value == 'week'){
             dateRef.current.type='date';
         }else if (value == 'year'){
+            // 년도 제한설정
             dateRef.current.type='number';
             dateRef.current.min='2000';
             dateRef.current.max='2099';
@@ -84,13 +85,12 @@ const HomeContainer = () => {
                            dateRef            = {dateRef}
                            period             = {period}
                            _handler_on_period = {_handler_on_period}
-                           searchDate  = {searchDate}
+                           searchDate         = {searchDate}
                            _handler_on_date   = {_handler_on_date}
                            condition1         = {condition1}
                            condition2         = {condition2}
                            condition3         = {condition3}
                            condition4         = {condition4}
-
             />);
 }
 

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Article from '../../components/Article';
-import Table from '../../components/Table';
 const StyledSection = styled.section`
     display:grid;
     grid-template-columns: 50em 50em;
@@ -9,26 +8,30 @@ const StyledSection = styled.section`
     grid-column-gap: 50px;
     grid-row-gap: 50px;
 `;
+
 const SubSection = styled.section`
     padding-top: 10px;
     display : flex;  
     flex-direction:column;
-
 `
+
 const InputLabel = styled.label`
     align-items:flex-end;
     font-size:1.2rem;
 `;
+
 const StyledP = styled.p`
     padding-bottom:5px;
 `;
+
 const StyledForm = styled.form`
     padding-top:15px;
     display:flex;
     flex-direction:row;
     align-items:flex-end;
 `;
-const LdaPresenter = ({searchPlot, 
+
+const ModelPresenter = ({searchPlot, 
                         dateRef,
                         period,
                         _handler_on_period,
@@ -36,7 +39,7 @@ const LdaPresenter = ({searchPlot,
                         _handler_on_date,
                         condition1,
                         condition2,
-                        table
+                        
                     }) => {
                         //delete_test
     return (
@@ -55,19 +58,21 @@ const LdaPresenter = ({searchPlot,
                 <input type='submit' value='click'/>
             </StyledForm>
             <StyledSection>
-                {/* <SubSection>
-                    <StyledP>데이터 발생량 </StyledP>
-                    <Article id="dataLdaScatter" 
+                <SubSection>
+                    <StyledP>모델 작업통계 </StyledP>
+                    <Article id="modelClassification" 
                              condition= {condition1}
                              />
-                </SubSection> */}
-                <SubSection>
-                    <Table table={table}
-                    condition= {condition2}/>
                 </SubSection>
+                <SubSection>
+                    <StyledP>모델 작업내역 </StyledP>
+                    <Article id="modelWorkContent" 
+                             condition= {condition2}
+                             />
+                </SubSection>    
             </StyledSection>
         </div>            
     );
 }
 
-export default LdaPresenter;
+export default ModelPresenter;

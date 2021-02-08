@@ -47,6 +47,9 @@ export default withRouter(({location:{pathname}}) => {
                     <Item current={pathname === "/lda"}>
                         <StyledLink to={"/lda"}>데이터 분석 결과 </StyledLink> 
                     </Item>              
+                    <Item current={pathname === "/model"}>
+                        <StyledLink to={"/model"}>모델 작업 결과 </StyledLink> 
+                    </Item>                                      
                     <Item current={pathname === "/admin"}>
                         <StyledLink to={"/admin"}>Admin </StyledLink> 
                     </Item>                                      

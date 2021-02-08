@@ -1,6 +1,7 @@
 import {useEffect, useState, useRef} from 'react';
-import LdaPresenter from './LdaPresenter';
-const LdaContainer = () => {    
+import ModelPresenter from './ModelPresenter';
+
+const ModelContainer = () => {    
     const initialDoc = {
         "year"  : new Date().getFullYear(),
         "month" : new Date().getMonth(),
@@ -9,17 +10,15 @@ const LdaContainer = () => {
     }
 
     const [searchDate, setSearchDate] = useState(new Date());        
-    const [period,     setPeriod]     = useState("week");
-    const [table,      setTable]      = useState({});
-    const [condition1, setCondition1] = useState({...initialDoc, "graphSort": "dataLdaScatter"});
-    const [condition2, setCondition2] = useState({...initialDoc, "graphSort": "dataLdaTable"});
+    const [period, setPeriod]         = useState("week");
+    const [condition1, setCondition1] = useState({...initialDoc, "graphSort": "modelWork"});
+    const [condition2, setCondition2] = useState({...initialDoc, "graphSort": "modelInfo"});
+    const dateRef = useRef(null);    
 
-    const dateRef = useRef(null);
-    
     // 검색 기간 업데이트 함수
-    const _handler_on_period = (e) =>{
+    const _handler_on_period = (e) =>{        
         // 선택된 기간에 따라 date input 조절
-        setPeriod(e.target.value);
+        setPeriod(e.target.value);        
         const value = e.target.value;
         if (value == 'week'){
             dateRef.current.type='date';
@@ -29,7 +28,7 @@ const LdaContainer = () => {
             dateRef.current.min='2000';
             dateRef.current.max='2099';
             dateRef.current.step='1';
-            dateRef.current.default='2000';
+            dateRef.current.default='2000';            
         }else{
             dateRef.current.type='month';
         }
@@ -38,14 +37,14 @@ const LdaContainer = () => {
     
     // 검색 날짜 업데이트 함수
     const _handler_on_date = (e) => {
-        setSearchDate(e.target.value);
+        setSearchDate(e.target.value);        
     }
     // Data.protype에 주차 구하는 새로운 함수 생성
 
     const searchPlot = async (e) => {
-        e.preventDefault();
+        e.preventDefault();               
         const date = new Date(searchDate);
-        const new_doc = {};
+        const new_doc = {};            
         switch (period ){
             case 'week':
                 new_doc['year']  = date.getFullYear();
@@ -64,11 +63,10 @@ const LdaContainer = () => {
                 break;
         }
 
-        // 검색조건 새로 배정
         new_doc['graphSort'] = condition1['graphSort'];
         setCondition1({...new_doc});
         new_doc['graphSort'] = condition2['graphSort'];
-        setCondition2({...new_doc});   
+        setCondition2({...new_doc});     
     }
 
     useEffect( ()=> {
@@ -77,16 +75,16 @@ const LdaContainer = () => {
 
     }, []);
     
-    return (<LdaPresenter searchPlot          = {searchPlot}
+    return (<ModelPresenter searchPlot         = {searchPlot}
                            dateRef            = {dateRef}
                            period             = {period}
                            _handler_on_period = {_handler_on_period}
-                           searchDate         = {searchDate}
+                           searchDate  = {searchDate}
                            _handler_on_date   = {_handler_on_date}
                            condition1         = {condition1}
                            condition2         = {condition2}
-                           table              = {table}
+
             />);
 }
 
-export default LdaContainer;
+export default ModelContainer;
