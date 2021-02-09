@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from './Header';
 import {Switch, Route, HashRouter as Router} from 'react-router-dom';
 import Home from '../router/Home';
@@ -6,8 +5,8 @@ import Admin from '../router/Admin';
 import Lda from '../router/Lda';
 import Model from '../router/Model';
 
-export default () => {
-
+const router = () => {
+    
     return (
         <Router>
             <Header />
@@ -19,4 +18,6 @@ export default () => {
             </Switch>
         </Router>
     );
-};
+}
+
+export default router;

@@ -22,9 +22,9 @@ const HomeContainer = () => {
         // 선택된 기간에 따라 date input 조절
         setPeriod(e.target.value);        
         const value = e.target.value;
-        if (value == 'week'){
+        if (value === 'week'){
             dateRef.current.type='date';
-        }else if (value == 'year'){
+        }else if (value === 'year'){
             // 년도 제한설정
             dateRef.current.type='number';
             dateRef.current.min='2000';

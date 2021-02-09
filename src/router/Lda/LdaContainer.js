@@ -1,4 +1,5 @@
 import {useEffect, useState, useRef} from 'react';
+import { serverApi } from '../../api';
 import LdaPresenter from './LdaPresenter';
 const LdaContainer = () => {    
     const initialDoc = {
@@ -10,10 +11,13 @@ const LdaContainer = () => {
 
     const [searchDate, setSearchDate] = useState(new Date());        
     const [period,     setPeriod]     = useState("week");
-    const [table,      setTable]      = useState({});
     const [condition1, setCondition1] = useState({...initialDoc, "graphSort": "dataLdaScatter"});
     const [condition2, setCondition2] = useState({...initialDoc, "graphSort": "dataLdaTable"});
-
+    const [state,      setState]      = useState({
+        result:{columns:"", data:""},
+        error:"",
+        loading:true
+    })
     const dateRef = useRef(null);
     
     // 검색 기간 업데이트 함수
@@ -21,9 +25,9 @@ const LdaContainer = () => {
         // 선택된 기간에 따라 date input 조절
         setPeriod(e.target.value);
         const value = e.target.value;
-        if (value == 'week'){
+        if (value === 'week'){
             dateRef.current.type='date';
-        }else if (value == 'year'){
+        }else if (value === 'year'){
             // 년도 제한설정
             dateRef.current.type='number';
             dateRef.current.min='2000';
@@ -34,8 +38,7 @@ const LdaContainer = () => {
             dateRef.current.type='month';
         }
         
-    }
-    
+    }    
     // 검색 날짜 업데이트 함수
     const _handler_on_date = (e) => {
         setSearchDate(e.target.value);
@@ -69,12 +72,45 @@ const LdaContainer = () => {
         setCondition1({...new_doc});
         new_doc['graphSort'] = condition2['graphSort'];
         setCondition2({...new_doc});   
+
+        new_doc['graphSort'] = "dataLdaTable"
+        searchTable(new_doc);
+    }
+
+    const searchTable = async (condition) => {
+        let result = null;
+        try {
+            
+            ({data:result} = await serverApi.getLdaTable(condition));
+        }
+        catch(error){
+            console.log(error);
+        }finally{
+            if( result !== null){
+                console.log('confirm');
+                console.log(result);
+
+                // 기여도와 일자는 정렬
+                result.columns[0]['sort'] = true;
+                result.columns[1]['sort'] = true;
+                
+                console.log((result.product ));                                
+                setState({result ,loading:false});
+            }            
+        }
     }
 
     useEffect( ()=> {
         const date = new Date();
         setSearchDate(date);
-
+        let new_doc = {};
+        new_doc['year']  = date.getFullYear();
+        new_doc['month'] = date.getMonth();
+        new_doc['week']  = date.getWeek();
+        new_doc['period'] = 'week';
+        new_doc['graphSort'] = "dataLdaTable"
+        console.log(new_doc);
+        searchTable(new_doc);
     }, []);
     
     return (<LdaPresenter searchPlot          = {searchPlot}
@@ -85,7 +121,8 @@ const LdaContainer = () => {
                            _handler_on_date   = {_handler_on_date}
                            condition1         = {condition1}
                            condition2         = {condition2}
-                           table              = {table}
+                           state              = {state}
+
             />);
 }
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
 import React from 'react-dom';
 import {serverApi} from '../api';
 import Loader from './Loader';
@@ -26,7 +26,7 @@ const Article = ({
         const showBokeh = (plot, div_id) => {
             console.log("bokeh start");
             
-            if(plot != undefined){
+            if(plot !== null){
                 console.log('load plot');
                 console.log(id);
                 const bokeh  =plot.data.data.plot;
@@ -37,20 +37,20 @@ const Article = ({
         // plot load
         const setPlot = async () => {
             console.log('setplot start') ;
-            let plot = undefined;       
+            let plot = null;       
             setLoading(true);            
             setKeyState("random"); // key 설정만 새로 해줘도 tag 초기화 된다.
             try{                        
                 plot = await serverApi.getBokeh(condition);
-                console.log('setplot',plot == undefined);
-                if( plot != undefined){
+                console.log('setplot',plot === null);
+                if( plot !== null){
                     showBokeh(plot, id);
                 }                
-            }catch(error){
-                setError(error);     
+            }catch(err){
+                setError(err);     
                 console.log(error);
             }finally{
-                if (plot != undefined){
+                if (plot !== null){
                     console.log('load complete');
                     setLoading(false);                
                 }
@@ -59,7 +59,7 @@ const Article = ({
         // plot 설정
         useEffect(()=>{          
             console.log('rerender');
-            setPlot()            
+            setPlot();            
         },[condition]);
         return (
             <>

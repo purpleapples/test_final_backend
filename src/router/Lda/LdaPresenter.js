@@ -1,19 +1,18 @@
 import styled from 'styled-components';
 import Article from '../../components/Article';
-import Table from '../../components/Table';
+import Loader from '../../components/Loader';
+import Table1 from '../../components/Table1';
 const StyledSection = styled.section`
     display:grid;
-    grid-template-columns: 50em 50em;
-    grid-template-rows : 20em 20em;
-    grid-row: auto auto;
-    grid-column-gap: 50px;
-    grid-row-gap: 50px;
+    grid-template-columns: 45em 50em;
+    grid-template-rows : 20em;
+    grid-row: auto;
+    grid-column-gap: 50px;    
 `;
 const SubSection = styled.section`
     padding-top: 10px;
     display : flex;  
     flex-direction:column;
-
 `
 const InputLabel = styled.label`
     align-items:flex-end;
@@ -36,13 +35,13 @@ const LdaPresenter = ({searchPlot,
                         _handler_on_date,
                         condition1,
                         condition2,
-                        table
+                        state                  
                     }) => {
-                        //delete_test
+    const {result, error, loading} = state;
+
     return (
         <div>
             <StyledForm onSubmit={searchPlot}>
-                
                 <InputLabel htmlFor ='date'>기간 선택 </InputLabel>
                 <select id = 'opts' size='1' name='opts' value={period} onChange={_handler_on_period}>
                     <option value='week' seleted="selected">  week</option>
@@ -55,15 +54,18 @@ const LdaPresenter = ({searchPlot,
                 <input type='submit' value='click'/>
             </StyledForm>
             <StyledSection>
+                sdsd
                 {/* <SubSection>
                     <StyledP>데이터 발생량 </StyledP>
                     <Article id="dataLdaScatter" 
                              condition= {condition1}
                              />
                 </SubSection> */}
-                <SubSection>
-                    <Table table={table}
-                    condition= {condition2}/>
+                <SubSection>       
+                    {loading ? (<Loader />) : <Table1 
+                        result = {result}
+                    />}
+                    
                 </SubSection>
             </StyledSection>
         </div>            
