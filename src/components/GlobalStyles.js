@@ -13,7 +13,7 @@ const globalStyles = createGlobalStyle`
     body{
         font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size:1.2rem;
-        background-color:rgba(20,80,150,0.9);
+        background-color:rgba(100, 100, 100, 0.9);
         color:white;
         padding-top:50px;
     }    

@@ -4,20 +4,28 @@ import ModelPresenter from './ModelPresenter';
 const ModelContainer = () => {    
     const initialDoc = {
         "year"  : new Date().getFullYear(),
-        "month" : new Date().getMonth(),
-        "week"  : new Date().getWeek(),
+        "month" : new Date().getMonth() +1,
+        "week"  : new Date().getWeek() -1,
         "graphSort" : ""
+    }
+
+    // 일자 설정 - db에서는 날짜 설정시 한자리 수가 없다.
+    if(initialDoc['month'].toString().length == 1){
+        initialDoc['month'] = '0' + initialDoc['month'].toString();
+    }
+    if(initialDoc['week'].toString().length == 1){
+        initialDoc['week'] = '0' + initialDoc['week'].toString();
     }
 
     const [searchDate, setSearchDate] = useState(new Date());        
     const [period,     setPeriod]     = useState("week");
-    const [condition1, setCondition1] = useState({...initialDoc, "graphSort": "dataModelWokd"});
+    const [condition1, setCondition1] = useState({...initialDoc, "graphSort": "dataModelWork"});
     const [condition2, setCondition2] = useState({...initialDoc, "graphSort": "dataModelTable"});
     const [state,      setState]      = useState({
         result:{columns:"", data:""},
         error:"",
         loading:true
-    })
+    });
     const dateRef = useRef(null);
     
     // 검색 기간 업데이트 함수
@@ -52,13 +60,13 @@ const ModelContainer = () => {
         switch (period ){
             case 'week':
                 new_doc['year']  = date.getFullYear();
-                new_doc['month'] = date.getMonth();
-                new_doc['week']  = date.getWeek();
+                new_doc['month'] = date.getMonth() +1;
+                new_doc['week']  = date.getWeek() -1;
                 new_doc['period'] = period;
                 break;
             case 'month':
                 new_doc['year']  = date.getFullYear();
-                new_doc['month'] = date.getMonth();
+                new_doc['month'] = date.getMonth() +1;
                 new_doc['period'] = period;
                 break;
             case 'year':
@@ -66,7 +74,13 @@ const ModelContainer = () => {
                 new_doc['period'] = period;
                 break;
         }
-
+        // 달, 주는 1자리 수 일 경우 무고전
+        if(new_doc['month'].toString().length == 1){
+            new_doc['month'] = '0' + new_doc['month'].toString();
+        }
+        if(new_doc['week'].toString().length == 1){
+            new_doc['week'] = '0' + new_doc['week'].toString();
+        }
         // 검색조건 새로 배정
         new_doc['graphSort'] = condition1['graphSort'];
         setCondition1({...new_doc});
@@ -76,15 +90,16 @@ const ModelContainer = () => {
         new_doc['graphSort'] = "dataModelTable"
         searchTable(new_doc);
     }
-
+    // 날짜 formatter
     const dateFormatter = (cell, row) => {
         const date = new Date(cell)
         return(
             <span>
-                {date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay() }
+                {date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() }
             </span>
         )
     }
+    // category formatter
     const categoryFormatter = (cell, row) => {
         let category ="";
         switch(cell){
@@ -115,20 +130,20 @@ const ModelContainer = () => {
             </span>
         )
     }        
-    
+    // table column style
     const headerStyle = {
         width:'50px',
         fontSize:'0.8rem',
-        backgroundColor:"white"
+        backgroundColor:"skyblue"
     }
     const headerStyle2 = {
         width:'200px',
         fontSize:'0.8rem',
-        backgroundColor:"white"
+        backgroundColor:"skyblue"
     }
     const columnStyle = {
-        fontSize:'0.8rem'
-        
+        fontSize:'0.8rem',
+        backgroundColor:"white"
     }
 
     // model 활동 내역 table 조회
@@ -144,10 +159,14 @@ const ModelContainer = () => {
                 console.log('confirm');                                
                 const columns = [
                     {dataField: 'key_value', text: '행렬번호', hidden:true},         
-                    {dataField: 'datetime', text: '작성시간', formatter:dateFormatter, headerStyle: headerStyle, style:columnStyle},
-                    {dataField: 'label', text: '사용자 지정 category', formatter:categoryFormatter, headerStyle: headerStyle, style:columnStyle},
-                    {dataField: 'prediction', text: '모델 지정 category', formatter:categoryFormatter, headerStyle: headerStyle, style:columnStyle},
-                    {dataField: 'content', text: '작성내용', style:columnStyle, headerStyle: headerStyle2, style:columnStyle}                    
+                    {dataField: 'datetime', text: '작성시간', formatter:dateFormatter, sort:true,
+                     headerStyle: headerStyle, style:columnStyle},
+                    {dataField: 'label', text: '기존 category', formatter:categoryFormatter, sort:true,
+                     headerStyle: headerStyle, style:columnStyle},
+                    {dataField: 'prediction', text: '모델 지정 category', formatter:categoryFormatter, sort:true,
+                     headerStyle: headerStyle, style:columnStyle},
+                    {dataField: 'content', text: '작성내용', style:columnStyle, sort:true,
+                     headerStyle: headerStyle2, style:columnStyle}                    
                 ]
                 result.column= columns;
                 console.log((result.product ));                                
@@ -156,6 +175,7 @@ const ModelContainer = () => {
         }
     }
 
+    // 최초에는 최근 일자만 검색
     useEffect( ()=> {
         const date = new Date();
         setSearchDate(date);
@@ -166,15 +186,15 @@ const ModelContainer = () => {
         searchTable(new_doc);
     }, []);
     
-    return (<ModelPresenter searchPlot          = {searchPlot}
-                           dateRef            = {dateRef}
-                           period             = {period}
-                           _handler_on_period = {_handler_on_period}
-                           searchDate         = {searchDate}
-                           _handler_on_date   = {_handler_on_date}
-                           condition1         = {condition1}
-                           condition2         = {condition2}
-                           state              = {state}
+    return (<ModelPresenter searchPlot         = {searchPlot}
+                            dateRef            = {dateRef}
+                            period             = {period}
+                            _handler_on_period = {_handler_on_period}
+                            searchDate         = {searchDate}
+                            _handler_on_date   = {_handler_on_date}
+                            condition1         = {condition1}
+                            condition2         = {condition2}
+                            state              = {state}
 
             />);
 }

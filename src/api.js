@@ -13,32 +13,22 @@ export const serverApi = {
         api.post('/visual', searchdoc,  {headers:{ "Content-Type": `application/json`}})
            .catch(error => {console.log(error)})
     ).then(response => {
-        console.log('plot');
-        console.log(response.data.data.plot);        
+        console.log('api.getBokeh async complete');
         return response;
     }),
     getLdaTable : (searchdoc) => (
         api.post('/visual/table/lda', searchdoc,  {headers:{ "Content-Type": `application/json`}})
         .catch(error => {console.log(error)})
     ).then(response => {
-        console.log('table');        
+        console.log('api.getLdaTable async complete');
+        console.log(response);
         return response.data;
-        // const result = {
-        //   application: "Dummy Data",
-        //   instance: "Dummy Data",
-        //   status: "Dummy Data",
-        //   interativeBlocked: false,
-        //   PCList: "Dummy Data",
-        //   stop: true,
-        //   executor: "Dummy Data",
-        //   executionTime: "Dummy Data",
-        // };
     }),
     getModelTable : (searchdoc) => (
         api.post('/visual/table/model', searchdoc,  {headers:{ "Content-Type": `application/json`}})
         .catch(error => {console.log(error)})
     ).then(response => {
-        console.log('table');        
+        console.log('api.getModelTable async complete');   
         return response.data;
         // const result = {
         //   application: "Dummy Data",

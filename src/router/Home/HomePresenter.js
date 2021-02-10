@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 import Article from '../../components/Article';
+
+const StyledDiv = styled.div`
+
+padding-left : 30px;
+
+`;
+
 const StyledSection = styled.section`
     display:grid;
     grid-template-columns: 50em 50em;
@@ -41,9 +48,8 @@ const HomePresenter = ({searchPlot,
                     }) => {
                         //delete_test
     return (
-        <div>
-            <StyledForm onSubmit={searchPlot}>
-                
+        <StyledDiv>
+            <StyledForm onSubmit={searchPlot}>                
                 <InputLabel htmlFor ='date'>기간 선택 </InputLabel>
                 <select id = 'opts' size='1' name='opts' value={period} onChange={_handler_on_period}>
                     <option value='week' seleted="selected">  week</option>
@@ -75,13 +81,13 @@ const HomePresenter = ({searchPlot,
                              />
                 </SubSection>
                 <SubSection>
-                    <StyledP>카테고리별 데이터 생성 비교 </StyledP>
+                    <StyledP>카테고리별 데이터 생성량 </StyledP>
                     <Article id="categoryComparison" 
                              condition= {condition4}
                              />
                 </SubSection>          
             </StyledSection>
-        </div>            
+        </StyledDiv>            
     );
 }
 

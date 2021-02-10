@@ -3,11 +3,20 @@ import HomePresenter from './HomePresenter';
 const HomeContainer = () => {    
     const initialDoc = {
         "year"  : new Date().getFullYear(),
-        "month" : new Date().getMonth(),
-        "week"  : new Date().getWeek(),
+        "month" : new Date().getMonth() +1,
+        "week"  : new Date().getWeek() -1,
         "graphSort" : ""
     }
 
+    // 일자 설정 - db에서는 날짜 설정시 한자리 수가 없다.
+    if(initialDoc['month'].toString().length == 1){
+        initialDoc['month'] = '0' + initialDoc['month'].toString();
+    }
+    if(initialDoc['week'].toString().length == 1){
+        initialDoc['week'] = '0' + initialDoc['week'].toString();
+    }
+
+    // state 설정
     const [searchDate, setSearchDate] = useState(new Date());        
     const [period, setPeriod]         = useState("week");
     const [condition1, setCondition1] = useState({...initialDoc, "graphSort": "dataOccur"});
@@ -19,9 +28,11 @@ const HomeContainer = () => {
 
     // 검색 기간 업데이트 함수
     const _handler_on_period = (e) =>{        
-        // 선택된 기간에 따라 date input 조절
+        
         setPeriod(e.target.value);        
         const value = e.target.value;
+
+        // 기간선택에 따른 date component 수정
         if (value === 'week'){
             dateRef.current.type='date';
         }else if (value === 'year'){
@@ -34,15 +45,14 @@ const HomeContainer = () => {
         }else{
             dateRef.current.type='month';
         }
-        
     }
     
     // 검색 날짜 업데이트 함수
     const _handler_on_date = (e) => {
         setSearchDate(e.target.value);        
     }
-    // Data.protype에 주차 구하는 새로운 함수 생성
-
+    
+    // condition 새로 설정함으로써 각 article component rerendering
     const searchPlot = async (e) => {
         e.preventDefault();               
         const date = new Date(searchDate);
@@ -50,13 +60,13 @@ const HomeContainer = () => {
         switch (period ){
             case 'week':
                 new_doc['year']  = date.getFullYear();
-                new_doc['month'] = date.getMonth();
-                new_doc['week']  = date.getWeek();
+                new_doc['month'] = date.getMonth() +1;
+                new_doc['week']  = date.getWeek() -1;
                 new_doc['period'] = period;
                 break;
             case 'month':
                 new_doc['year']  = date.getFullYear();
-                new_doc['month'] = date.getMonth();
+                new_doc['month'] = date.getMonth() +1;
                 new_doc['period'] = period;
                 break;
             case 'year':
@@ -64,7 +74,12 @@ const HomeContainer = () => {
                 new_doc['period'] = period;
                 break;
         }
-
+        if(new_doc['month'].toString().length == 1){
+            new_doc['month'] = '0' + new_doc['month'].toString();
+        }
+        if(new_doc['week'].toString().length == 1){
+            new_doc['week'] = '0' + new_doc['week'].toString();
+        }
         new_doc['graphSort'] = condition1['graphSort'];
         setCondition1({...new_doc});
         new_doc['graphSort'] = condition2['graphSort'];

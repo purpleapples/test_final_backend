@@ -6,17 +6,24 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 const Table1 = (
     {result}
 ) => {
-    const {column, product} = result;
+    const {empty, column, product} = result;
 
-    return <div>
-        table 1
-        {result && (
+    const sizePerPageList = [
+        {text: 'All', value:5}
+    ];
+    const options = {
+        sizePerPageList
+    };
+    return <div>        
+        {empty ? (<>
+        <p> 해당하신 일자에는 데이터가 없습니다.</p>        
+        </>) : result && (
             <BootstrapTable keyField='key_value' 
                             data={product}
                             columns={ column }
                             striped
                             hover
-                            pagination={ paginationFactory() } /> 
+                            pagination={ paginationFactory(options) } /> 
         )}
         
         

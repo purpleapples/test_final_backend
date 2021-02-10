@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import Article from '../../components/Article';
 import Loader from '../../components/Loader';
 import Table1 from '../../components/Table1';
+
+const StyledDiv = styled.div`
+    padding-left:30px;
+`;
+
 const StyledSection = styled.section`
     display:grid;
     grid-template-columns: 45em 50em;
@@ -40,7 +45,7 @@ const LdaPresenter = ({searchPlot,
     const {result, error, loading} = state;
 
     return (
-        <div>
+        <StyledDiv>
             <StyledForm onSubmit={searchPlot}>
                 <InputLabel htmlFor ='date'>기간 선택 </InputLabel>
                 <select id = 'opts' size='1' name='opts' value={period} onChange={_handler_on_period}>
@@ -54,21 +59,26 @@ const LdaPresenter = ({searchPlot,
                 <input type='submit' value='click'/>
             </StyledForm>
             <StyledSection>
-                sdsd
-                {/* <SubSection>
+                
+                <SubSection>
                     <StyledP>데이터 발생량 </StyledP>
                     <Article id="dataLdaScatter" 
                              condition= {condition1}
                              />
-                </SubSection> */}
-                <SubSection>       
-                    {loading ? (<Loader />) : <Table1 
+                </SubSection>
+                <SubSection>
+                    {loading ? (<Loader />) : (
+                    <>
+                    <StyledP>모델 작업 내용 </StyledP>
+                    <Table1 
                         result = {result}
-                    />}
+                    />
+                    </>
+                    )}
                     
                 </SubSection>
             </StyledSection>
-        </div>            
+        </StyledDiv>            
     );
 }
 
