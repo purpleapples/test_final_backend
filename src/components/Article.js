@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import {useEffect, useState, useRef} from 'react';
-import React from 'react-dom';
+import React, {ReactDOM} from 'react-dom';
 import {serverApi} from '../api';
 import Loader from './Loader';
+import reactDom from 'react-dom';
 
 const StyledArticle = styled.article`
 border-radius : 5px 0px 0px 5px;
@@ -22,11 +23,12 @@ const Article = ({
         const [loading, setLoading]        = useState(true);
         const [error, setError]            = useState("");
         const [keyState, setKeyState]      = useState("");
-        const [empty, setEmpty]            = useState(false);
+        const [empty, setEmpty]            = useState(true);
         const itSelf =  useRef(null);
         // plot 화면에 띄우기
         const showBokeh = (plot, div_id) => {
             console.log(div_id, "bokeh start");        
+            reactDom.findDOMNode(itSelf.current).innerHTML = "";
             window.Bokeh.embed.embed_item(plot, div_id);                                               
         } 
 
@@ -35,7 +37,9 @@ const Article = ({
             console.log(id, 'setplot function start'); 
 
             if (itSelf.current !== null){
-                itSelf.current.innerHTML= "";
+                reactDom.findDOMNode(itSelf.current).innerHTML ="<p>로딩중</p>";
+                console.log(itSelf.current);
+                
             }
             const date = new Date(condition['date']);
             let searchMap = {};
