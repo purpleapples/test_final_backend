@@ -13,9 +13,9 @@ const getDateCondition = (dateStr, period) => {
     }        
     switch (period ){
         case 'week':
-            dateCond['year']       = date.getFullYear().toString();
-            dateCond['month']      = month;
-            dateCond['weekofyear'] = week;
+            dateCond['year']  = date.getFullYear().toString();
+            dateCond['month'] = month;
+            dateCond['week']  = week;
             break;
         case 'month':
             dateCond['year']  = date.getFullYear().toString();

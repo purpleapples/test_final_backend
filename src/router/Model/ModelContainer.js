@@ -90,6 +90,9 @@ const ModelContainer = () => {
     // model 활동 내역 table 조회
     const searchTable = async (date, period) => {
         let cond = getDateCondition(date, period);
+        cond['weekofyear'] = cond['week'];
+        delete cond['week'];
+        
         let result = null;
         try {
             ({data:result} = await serverApi.getModelTable(condition));

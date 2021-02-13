@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {useEffect, useState, useRef} from 'react';
 import React, {ReactDOM} from 'react-dom';
 import {serverApi} from '../api';
+import getDateCondition from '../js/common';
 import Loader from './Loader';
 import reactDom from 'react-dom';
 
@@ -41,37 +42,11 @@ const Article = ({
                 console.log(itSelf.current);
                 
             }
-            const date = new Date(condition['date']);
-            let searchMap = {};
+            
+            const date = new Date(condition['date']);            
             const period = condition['period'];
-
-            // 주차 format
-            let week = date.getWeek().toString();
-            if ( week.length ===1){
-                week = '0' +week;    
-            }        
-            // 시간 조건 설정
-            switch (period ){
-                case 'week':
-                    searchMap['year']  = date.getFullYear().toString();
-                    searchMap['month'] = (date.getMonth() +1).toString();
-                    searchMap['week']  = week;
-                    
-                    searchMap['period'] = period;
-                    break;
-                case 'month':
-                    searchMap['year']  = date.getFullYear().toString();
-                    searchMap['month'] = (date.getMonth() +1).toString();
-                    searchMap['period'] = period;
-                    break;
-                case 'year':
-                    searchMap['year']  = date.getFullYear().toString();
-                    searchMap['period'] = period;
-                    break;
-            }
-            if(searchMap['month'].length === 1){
-                searchMap['month'] = '0' + searchMap['month'];
-            }
+            let searchMap = {};
+            searchMap = getDateCondition(date, period);
             
             searchMap['graphSort'] = graphSort;
             searchMap['period'] = period;
