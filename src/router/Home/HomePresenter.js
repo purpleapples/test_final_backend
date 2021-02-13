@@ -40,11 +40,7 @@ const HomePresenter = ({searchPlot,
                         _handler_on_period,
                         searchDate,                        
                         _handler_on_date,
-                        condition1,
-                        condition2,
-                        condition3,
-                        condition4,
-                        
+                        condition
                     }) => {
                         //delete_test
     return (
@@ -65,25 +61,29 @@ const HomePresenter = ({searchPlot,
                 <SubSection>
                     <StyledP>데이터 발생량 </StyledP>
                     <Article id="dataOccur" 
-                             condition= {condition1}
+                             graphSort={'dataOccur'}
+                             condition= {condition}
                              />
                 </SubSection>
                 <SubSection>
                     <StyledP>데이터 변화량 </StyledP>
                     <Article id="dataFlow" 
-                             condition= {condition2}
+                             graphSort={'dataFlow'}
+                             condition= {condition}
                              />
                 </SubSection>
                 <SubSection>
                     <StyledP>카테고리별 발생량 </StyledP>
                     <Article id="categoryOccur" 
-                             condition= {condition3}
+                             graphSort={'categoryOccur'}
+                             condition= {condition}
                              />
                 </SubSection>
                 <SubSection>
                     <StyledP>카테고리별 데이터 생성량 </StyledP>
-                    <Article id="categoryComparison" 
-                             condition= {condition4}
+                    <Article id="categoryComparison"
+                             graphSort={'categoryComparison'} 
+                             condition= {condition}
                              />
                 </SubSection>          
             </StyledSection>

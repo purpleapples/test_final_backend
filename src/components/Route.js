@@ -4,7 +4,7 @@ import Home from '../router/Home';
 import Admin from '../router/Admin';
 import Lda from '../router/Lda';
 import Model from '../router/Model';
-
+import Test from '../router/Test';
 const router = () => {
     
     return (
@@ -15,6 +15,7 @@ const router = () => {
                 <Route path={"/lda"} exact component={Lda}></Route>
                 <Route path={"/model"} exact component={Model}></Route>
                 <Route path={"/admin"} exact component={Admin}></Route>                
+                {/* <Route path={"/test"} exact component={Test}></Route>                 */}
             </Switch>
         </Router>
     );

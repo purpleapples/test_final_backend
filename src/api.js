@@ -30,19 +30,7 @@ export const serverApi = {
     ).then(response => {
         console.log('api.getModelTable async complete');   
         return response.data;
-        // const result = {
-        //   application: "Dummy Data",
-        //   instance: "Dummy Data",
-        //   status: "Dummy Data",
-        //   interativeBlocked: false,
-        //   PCList: "Dummy Data",
-        //   stop: true,
-        //   executor: "Dummy Data",
-        //   executionTime: "Dummy Data",
-        // };
-    })
-
-
-
+    }),
+    getTestBokeh : () => (api.get('/test/visual'))
     
 };

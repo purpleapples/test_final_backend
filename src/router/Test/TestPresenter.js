@@ -6,13 +6,12 @@ import Table1 from '../../components/Table1';
 const StyledDiv = styled.div`
     padding-left:30px;
 `;
-
 const StyledSection = styled.section`
     display:grid;
     grid-template-columns: 45em 50em;
     grid-template-rows : 20em;
     grid-row: auto;
-    grid-column-gap: 30px;    
+    grid-column-gap: 50px;    
 `;
 const SubSection = styled.section`
     padding-top: 10px;
@@ -32,7 +31,7 @@ const StyledForm = styled.form`
     flex-direction:row;
     align-items:flex-end;
 `;
-const LdaPresenter = ({searchPlot, 
+const TestPresenter = ({searchPlot, 
                         dateRef,
                         period,
                         _handler_on_period,
@@ -58,20 +57,19 @@ const LdaPresenter = ({searchPlot,
                 <input type='submit' value='click'/>
             </StyledForm>
             <StyledSection>
-                
-                <SubSection>
-                    <StyledP>LDA 분석 시각화 </StyledP>
-                    <Article id="dataLdaScatter" 
-                             graphSort = {'dataLdaScatter'}
-                             condition = {condition}
+                <div id='testPlot' />
+                {/* <SubSection>
+                    <StyledP>모델 작업 통계 </StyledP>
+                    <Article id="testPlot" 
+                             graphSort= {'testPlot'}
+                             condition= {condition}
                              />
-                </SubSection>
+                </SubSection> */}
                 <SubSection>
                     {loading ? (<Loader />) : (
                     <>
-                    <StyledP>LDA 분석내용 </StyledP>
+                    <StyledP>모델 작업 내용 </StyledP>
                     <Table1 
-                    
                         result = {result}
                     />
                     </>
@@ -83,4 +81,4 @@ const LdaPresenter = ({searchPlot,
     );
 }
 
-export default LdaPresenter;
+export default TestPresenter;

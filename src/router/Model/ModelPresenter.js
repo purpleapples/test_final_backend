@@ -37,8 +37,7 @@ const ModelPresenter = ({searchPlot,
                         _handler_on_period,
                         searchDate,                        
                         _handler_on_date,
-                        condition1,
-                        condition2,
+                        condition,
                         state                  
                     }) => {
     const {result, error, loading} = state;
@@ -61,11 +60,12 @@ const ModelPresenter = ({searchPlot,
 
                 <SubSection>
                     <StyledP>모델 작업 통계 </StyledP>
-                    <Article id="dataModelScatter" 
-                             condition= {condition1}
+                    <Article id="dataModelClassification" 
+                             graphSort= {'dataModelClassification'}
+                             condition= {condition}
                              />
                 </SubSection>
-                <SubSection>
+                {/* <SubSection>
                     {loading ? (<Loader />) : (
                     <>
                     <StyledP>모델 작업 내용 </StyledP>
@@ -75,7 +75,7 @@ const ModelPresenter = ({searchPlot,
                     </>
                     )}
                     
-                </SubSection>
+                </SubSection> */}
             </StyledSection>
         </StyledDiv>            
     );

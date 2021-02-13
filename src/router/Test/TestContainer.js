@@ -1,8 +1,8 @@
 import {useEffect, useState, useRef} from 'react';
 import { serverApi } from '../../api';
-import ModelPresenter from './ModelPresenter';
+import TestPresenter from './TestPresenter';
 import getDateCondition from '../../js/common';
-const ModelContainer = () => {    
+const TestContainer = () => {    
 
     const [searchDate, setSearchDate] = useState(new Date());        
     const [period,     setPeriod]     = useState("week");
@@ -118,11 +118,19 @@ const ModelContainer = () => {
 
     const searchPlot = async (e) => {
         e.preventDefault();
-        console.log('searchPlot');
+        console.log('testPlot');
         let new_doc = {'date':searchDate, 'period':period};
-        setCondition({...new_doc});       
-        const date = new Date(searchDate);        
-        searchTable(date. period);
+        let plot = 0
+        plot =  await serverApi.getTestBokeh();
+        let item = plot['data']['data']['plot']
+        console.log(plot['data']['data']);
+        console.log(item);
+        if (plot !== 0 ){
+            window.Bokeh.embed.embed_item(item, "testPlot");
+        }
+        // setCondition({...new_doc});       
+        //const date = new Date(searchDate);        
+        //searchTable(date. period);
     }
 
     // 최초에는 최근 일자만 검색
@@ -132,7 +140,7 @@ const ModelContainer = () => {
         searchTable(date, period);
     }, []);
     
-    return (<ModelPresenter searchPlot         = {searchPlot}
+    return (<TestPresenter searchPlot         = {searchPlot}
                             dateRef            = {dateRef}
                             period             = {period}
                             _handler_on_period = {_handler_on_period}
@@ -144,4 +152,4 @@ const ModelContainer = () => {
             />);
 }
 
-export default ModelContainer;
+export default TestContainer;
