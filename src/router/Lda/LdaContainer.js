@@ -40,9 +40,14 @@ const LdaContainer = () => {
     // 날짜 formatter
     const dateFormatter = (cell, row) => {
         const date = new Date(cell)
+        let fy =  date.getFullYear().toString()
+        let month = date.getMonth();
+        month  = month +1; 
+        let monthStr = month.toString();
+        let date = date.getDate().toString();
         return(
             <span>
-                {date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() }
+                {ft + '-' + monthStr + '-' + date}
             </span>
         )
     }
