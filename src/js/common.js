@@ -3,7 +3,8 @@
 const getDateCondition = (dateStr, period) => {
     const date = new Date(dateStr);
     let dateCond = {};
-    let week = (date.getWeek()-1).toString();
+    let weeknum = date.getWeek();    
+    let week = (weeknum-1).toString();
     if ( week.length ===1){
         week = '0' + week;    
     }        
