@@ -95,7 +95,7 @@ const ModelContainer = () => {
         
         let result = null;
         try {
-            ({data:result} = await serverApi.getModelTable(condition));
+            ({data:result} = await serverApi.getModelTable(cond));
         }
         catch(error){
             console.log(error);
@@ -110,7 +110,7 @@ const ModelContainer = () => {
                      headerStyle: headerStyle, style:columnStyle},
                     {dataField: 'prediction', text: '모델 지정 category', formatter:categoryFormatter, sort:true,
                      headerStyle: headerStyle, style:columnStyle},
-                    {dataField: 'content', text: '작성내용', sort:true,
+                    {dataField: 'board_content', text: '작성내용', sort:true,
                      headerStyle: headerStyle2, style:columnStyle}                    
                 ]
                 result.column= columns;                          
@@ -119,13 +119,14 @@ const ModelContainer = () => {
         }
     }
 
+    // 시각화 자료 찾기
     const searchPlot = async (e) => {
         e.preventDefault();
         console.log('searchPlot');
         let new_doc = {'date':searchDate, 'period':period};
         setCondition({...new_doc});       
         const date = new Date(searchDate);        
-        searchTable(date. period);
+        searchTable(date, period);
     }
 
     // 최초에는 최근 일자만 검색

@@ -69,10 +69,11 @@ const LdaPresenter = ({searchPlot,
                 <SubSection>
                     {loading ? (<Loader />) : (
                     <>
-                    <StyledP>LDA 분석내용 </StyledP>
+                    <StyledP>LDA 분석내용(100개 미만의 데이터는 표시되지 않습니다.) </StyledP>
                     <Table1 
                     
                         result = {result}
+                        element_cnt ={5}
                     />
                     </>
                     )}

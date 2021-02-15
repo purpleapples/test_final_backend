@@ -89,16 +89,6 @@ const LdaContainer = () => {
         backgroundColor:"white"
     }
 
-    // 시각화 자료 찾기
-    const searchPlot = async (e) => {
-        e.preventDefault();
-        console.log('searchPlot');
-        let new_doc = {'date':searchDate, 'period':period};
-        setCondition({...new_doc});       
-        const date = new Date(searchDate);        
-        searchTable(date, period);
-    }
-
     // model 활동 내역 table 조회
     const searchTable = async (date, period) => {
         let cond = getDateCondition(date, period);
@@ -129,6 +119,16 @@ const LdaContainer = () => {
                 setState({result ,loading:false});
             }            
         }
+    }
+    
+    // 시각화 자료 찾기
+    const searchPlot = async (e) => {
+        e.preventDefault();
+        console.log('searchPlot');
+        let new_doc = {'date':searchDate, 'period':period};
+        setCondition({...new_doc});       
+        const date = new Date(searchDate);        
+        searchTable(date, period);
     }
 
     // 최초에는 최근 일자만 검색

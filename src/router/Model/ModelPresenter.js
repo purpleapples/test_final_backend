@@ -65,17 +65,18 @@ const ModelPresenter = ({searchPlot,
                              condition= {condition}
                              />
                 </SubSection>
-                {/* <SubSection>
+                <SubSection>
                     {loading ? (<Loader />) : (
                     <>
                     <StyledP>모델 작업 내용 </StyledP>
                     <Table1 
                         result = {result}
+                        element_cnt ={8}
                     />
                     </>
                     )}
                     
-                </SubSection> */}
+                </SubSection>
             </StyledSection>
         </StyledDiv>            
     );
