@@ -42,7 +42,7 @@ const LdaContainer = () => {
         const date = new Date(cell)
         return(
             <span>
-                {date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() }
+                {date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() }
             </span>
         )
     }
