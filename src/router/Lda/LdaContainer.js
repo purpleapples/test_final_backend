@@ -47,7 +47,7 @@ const LdaContainer = () => {
         let datestr = date.getDate().toString();
         return(
             <span>
-                {ft + '-' + monthStr + '-' + datestr}
+                {fy + '-' + monthStr + '-' + datestr}
             </span>
         )
     }
