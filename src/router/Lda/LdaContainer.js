@@ -44,10 +44,10 @@ const LdaContainer = () => {
         let month = date.getMonth();
         month  = month +1; 
         let monthStr = month.toString();
-        let date = date.getDate().toString();
+        let datestr = date.getDate().toString();
         return(
             <span>
-                {ft + '-' + monthStr + '-' + date}
+                {ft + '-' + monthStr + '-' + datestr}
             </span>
         )
     }
